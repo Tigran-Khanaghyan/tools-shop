@@ -104,6 +104,7 @@ export default function LoginPage() {
 
           <button
             onClick={handleDemo}
+            data-qa="continue-demo-button"
             className="w-full border border-gray-200 hover:bg-gray-50 text-gray-700 font-medium py-2.5 rounded-xl text-sm transition-colors"
           >
             Continue with Demo Account

@@ -4,7 +4,7 @@ import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 type Page = 'account' | 'tools' | 'basket';
-type NavItem = { page: Page; label: string; path: string; icon: React.ReactNode };
+type NavItem = { page: Page; label: string; path: string; icon: React.ReactNode, dataId: string };
 
 export default function Header() {
   const { logout } = useAuth();
@@ -13,9 +13,9 @@ export default function Header() {
   const location = useLocation();
 
   const navItems: NavItem[] = [
-    { page: 'account', label: 'Account', path: '/account', icon: <User size={16} /> },
-    { page: 'tools', label: 'My Tools', path: '/tools', icon: <LayoutGrid size={16} /> },
-    { page: 'basket', label: 'Basket', path: '/basket', icon: <ShoppingCart size={16} /> },
+    { page: 'account', label: 'Account', path: '/account', icon: <User size={16} /> , dataId: "nav-account"},
+    { page: 'tools', label: 'My Tools', path: '/tools', icon: <LayoutGrid size={16} />, dataId: "" },
+    { page: 'basket', label: 'Basket', path: '/basket', icon: <ShoppingCart size={16} />, dataId: "nav-basket" },
   ];
 
   return (
@@ -33,8 +33,9 @@ export default function Header() {
 
           {/* Nav */}
           <nav className="flex items-center gap-1">
-            {navItems.map(({ page, label, path, icon }) => (
+            {navItems.map(({ page, label, path, icon, dataId }) => (
               <button
+              data-qa={dataId}
                 key={page}
                 onClick={() => navigate(path)}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 relative ${
@@ -46,7 +47,7 @@ export default function Header() {
                 {icon}
                 <span className="hidden sm:inline">{label}</span>
                 {page === 'basket' && totalCount > 0 && (
-                  <span className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-semibold leading-none">
+                  <span data-qa="nav-basket-count" className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-semibold leading-none">
                     {totalCount > 9 ? '9+' : totalCount}
                   </span>
                 )}

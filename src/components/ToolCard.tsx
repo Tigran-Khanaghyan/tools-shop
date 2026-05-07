@@ -47,6 +47,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
         <div className="flex items-center justify-between pt-1">
           <span className="text-xl font-bold text-gray-900">${tool.price.toFixed(2)}</span>
           <button
+            data-qa="product-button"
             onClick={handleAdd}
             className={`flex items-center gap-1.5 px-3 py-2 rounded-xl text-sm font-semibold transition-all duration-200 ${
               added
