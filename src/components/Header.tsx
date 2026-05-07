@@ -1,22 +1,21 @@
 import { ShoppingCart, Wrench, User, LayoutGrid, LogOut } from 'lucide-react';
+import { useLocation, useNavigate } from 'react-router-dom';
 import { useAuth } from '../context/AuthContext';
 import { useCart } from '../context/CartContext';
 
 type Page = 'account' | 'tools' | 'basket';
+type NavItem = { page: Page; label: string; path: string; icon: React.ReactNode };
 
-interface HeaderProps {
-  currentPage: Page;
-  onNavigate: (page: Page) => void;
-}
-
-export default function Header({ currentPage, onNavigate }: HeaderProps) {
+export default function Header() {
   const { logout } = useAuth();
   const { totalCount } = useCart();
+  const navigate = useNavigate();
+  const location = useLocation();
 
-  const navItems: { page: Page; label: string; icon: React.ReactNode }[] = [
-    { page: 'account', label: 'Account', icon: <User size={16} /> },
-    { page: 'tools', label: 'My Tools', icon: <LayoutGrid size={16} /> },
-    { page: 'basket', label: 'Basket', icon: <ShoppingCart size={16} /> },
+  const navItems: NavItem[] = [
+    { page: 'account', label: 'Account', path: '/account', icon: <User size={16} /> },
+    { page: 'tools', label: 'My Tools', path: '/tools', icon: <LayoutGrid size={16} /> },
+    { page: 'basket', label: 'Basket', path: '/basket', icon: <ShoppingCart size={16} /> },
   ];
 
   return (
@@ -25,7 +24,7 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <button
-            onClick={() => onNavigate('tools')}
+            onClick={() => navigate('/tools')}
             className="flex items-center gap-2 text-blue-600 font-bold text-xl tracking-tight hover:text-blue-700 transition-colors"
           >
             <Wrench size={24} />
@@ -34,12 +33,12 @@ export default function Header({ currentPage, onNavigate }: HeaderProps) {
 
           {/* Nav */}
           <nav className="flex items-center gap-1">
-            {navItems.map(({ page, label, icon }) => (
+            {navItems.map(({ page, label, path, icon }) => (
               <button
                 key={page}
-                onClick={() => onNavigate(page)}
+                onClick={() => navigate(path)}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 relative ${
-                  currentPage === page
+                  location.pathname === path
                     ? 'bg-blue-50 text-blue-700'
                     : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
                 }`}
