@@ -15,17 +15,17 @@ export class BasketPage {
 
   removeExpensiveTool = async () => {
     await this.basketCards.first().waitFor();
-    const itemsBeforeRemoval = await this.basketCards.count()
+    const itemsBeforeRemoval = await this.basketCards.count();
     await this.basketCardPrices.first().waitFor();
     const allPriceTexts = await this.basketCardPrices.allInnerTexts();
     const prices = allPriceTexts.map((item) => {
-        return parseFloat(item.replace('$', ''))
-    })
-    const maxNumber = Math.max(...prices)
-    const maxNumberIndex = prices.indexOf(maxNumber)
-    await this.removeBasketCardButtons.nth(maxNumberIndex).waitFor()
-    await this.removeBasketCardButtons.nth(maxNumberIndex).click()
-    const itemsAfterRemoval = await this.basketCards.count()
-    expect(itemsAfterRemoval).toBe(itemsBeforeRemoval - 1)
+      return parseFloat(item.replace("$", ""));
+    });
+    const maxNumber = Math.max(...prices);
+    const maxNumberIndex = prices.indexOf(maxNumber);
+    await this.removeBasketCardButtons.nth(maxNumberIndex).waitFor();
+    await this.removeBasketCardButtons.nth(maxNumberIndex).click();
+    const itemsAfterRemoval = await this.basketCards.count();
+    expect(itemsAfterRemoval).toBe(itemsBeforeRemoval - 1);
   };
 }

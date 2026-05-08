@@ -99,4 +99,9 @@ export const TOOLS: Tool[] = [
   },
 ];
 
-export const CATEGORIES = ['All', 'Power Tools', 'Hand Tools', 'Measuring'];
+export const CATEGORIES = [
+  { cat: "All", dataId: "all" },
+  { cat: "Power Tools", dataId: "power_tools" },
+  { cat: "Hand Tools", dataId: "hand_tools" },
+  { cat: "Measuring", dataId: "measuring" },
+];

@@ -3,9 +3,13 @@ import { Navigation } from "./Navigation";
 
 export class ToolsPage {
   private addButtons: Locator;
+  private powerToolsFilterButton: Locator;
+  private toolTitles: Locator;
 
   constructor(private page: Page) {
     this.addButtons = page.locator('[data-qa="product-button"]');
+    this.powerToolsFilterButton = page.locator('[data-qa="power_tools"]');
+    this.toolTitles = page.locator('[data-qa="tool-title"]');
   }
 
   visit = async () => {
@@ -27,5 +31,13 @@ export class ToolsPage {
     await expect(this.addButtons.nth(index)).toHaveText("Add More");
     const basketCountAfterAdding = await navigation.getBasketCount();
     expect(basketCountAfterAdding).toBeGreaterThan(basketCountBeforAdding);
+  };
+
+  sortByPowerTools = async () => {
+    await this.powerToolsFilterButton.waitFor();
+    const toolsTitlesBeforeFiltering = await this.toolTitles.allInnerTexts();
+    await this.powerToolsFilterButton.click();
+    const toolsTitlesAfterFiltering = await this.toolTitles.allInnerTexts();
+    expect(toolsTitlesAfterFiltering).not.toEqual(toolsTitlesBeforeFiltering);
   };
 }
