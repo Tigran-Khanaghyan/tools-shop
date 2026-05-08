@@ -24,7 +24,7 @@ export default function Header() {
         <div className="flex items-center justify-between h-16">
           {/* Logo */}
           <button
-            onClick={() => navigate('/tools')}
+            onClick={() => navigate("/tools")}
             className="flex items-center gap-2 text-blue-600 font-bold text-xl tracking-tight hover:text-blue-700 transition-colors"
           >
             <Wrench size={24} />
@@ -35,20 +35,23 @@ export default function Header() {
           <nav className="flex items-center gap-1">
             {navItems.map(({ page, label, path, icon, dataId }) => (
               <button
-              data-qa={dataId}
+                data-qa={dataId}
                 key={page}
                 onClick={() => navigate(path)}
                 className={`flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium transition-all duration-150 relative ${
                   location.pathname === path
-                    ? 'bg-blue-50 text-blue-700'
-                    : 'text-gray-600 hover:bg-gray-100 hover:text-gray-900'
+                    ? "bg-blue-50 text-blue-700"
+                    : "text-gray-600 hover:bg-gray-100 hover:text-gray-900"
                 }`}
               >
                 {icon}
                 <span className="hidden sm:inline">{label}</span>
-                {page === 'basket' && totalCount > 0 && (
-                  <span data-qa="nav-basket-count" className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-semibold leading-none">
-                    {totalCount > 9 ? '9+' : totalCount}
+                {page === "basket" && (
+                  <span
+                    data-qa="nav-basket-count"
+                    className="absolute -top-1 -right-1 bg-blue-600 text-white text-xs rounded-full w-4 h-4 flex items-center justify-center font-semibold leading-none"
+                  >
+                    {totalCount > 9 ? "9+" : totalCount}
                   </span>
                 )}
               </button>
