@@ -1,12 +1,11 @@
 import { expect, Locator, Page } from "@playwright/test";
+import { Navigation } from "./Navigation";
 
 export class ToolsPage {
   private addButtons: Locator;
-  private basketCounter: Locator;
 
   constructor(private page: Page) {
     this.addButtons = page.locator('[data-qa="product-button"]');
-    this.basketCounter = page.locator('[data-qa="nav-basket-count"]');
   }
 
   visit = async () => {
@@ -19,19 +18,14 @@ export class ToolsPage {
     await this.page.goto("/tools");
   };
 
-  getBasketCount = async () => {
-    await this.basketCounter.waitFor();
-    const text = await this.basketCounter.innerText();
-    return parseInt(text);
-  };
-
   addToolToBasket = async (index: number) => {
     await this.addButtons.nth(index).waitFor();
     await expect(this.addButtons.nth(index)).toHaveText("Add to Basket");
-    const basketCountBeforAdding = await this.getBasketCount();
+    const navigation = new Navigation(this.page);
+    const basketCountBeforAdding = await navigation.getBasketCount();
     await this.addButtons.nth(index).click();
     await expect(this.addButtons.nth(index)).toHaveText("Add More");
-    const basketCountAfterAdding = await this.getBasketCount();
+    const basketCountAfterAdding = await navigation.getBasketCount();
     expect(basketCountAfterAdding).toBeGreaterThan(basketCountBeforAdding);
   };
 }
