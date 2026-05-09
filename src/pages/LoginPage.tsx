@@ -35,12 +35,16 @@ export default function LoginPage() {
             <Wrench size={28} className="text-white" />
           </div>
           <h1 className="text-2xl font-bold text-gray-900">ToolShop</h1>
-          <p className="text-sm text-gray-500 mt-1">Professional tools for every job</p>
+          <p className="text-sm text-gray-500 mt-1">
+            Professional tools for every job
+          </p>
         </div>
 
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
-          <h2 className="text-xl font-semibold text-gray-900 mb-1">Welcome back</h2>
+          <h2 className="text-xl font-semibold text-gray-900 mb-1">
+            Welcome back
+          </h2>
           <p className="text-sm text-gray-500 mb-6">Sign in to your account</p>
 
           {error && (
@@ -53,31 +57,45 @@ export default function LoginPage() {
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
-                <Mail size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Mail
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
                 <input
                   type="email"
                   placeholder="you@example.com"
                   value={email}
-                  onChange={e => { setEmail(e.target.value); setError(''); }}
+                  onChange={(e) => {
+                    setEmail(e.target.value);
+                    setError("");
+                  }}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
               </div>
             </div>
 
             <div className="flex flex-col gap-1.5">
-              <label className="text-sm font-medium text-gray-700">Password</label>
+              <label className="text-sm font-medium text-gray-700">
+                Password
+              </label>
               <div className="relative">
-                <Lock size={16} className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400" />
+                <Lock
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  type={showPw ? "text" : "password"}
                   placeholder="••••••••"
                   value={password}
-                  onChange={e => { setPassword(e.target.value); setError(''); }}
+                  onChange={(e) => {
+                    setPassword(e.target.value);
+                    setError("");
+                  }}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
                 <button
                   type="button"
-                  onClick={() => setShowPw(s => !s)}
+                  onClick={() => setShowPw((s) => !s)}
                   className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
                 >
                   {showPw ? <EyeOff size={16} /> : <Eye size={16} />}
@@ -86,6 +104,7 @@ export default function LoginPage() {
             </div>
 
             <button
+              data-qa="submit-login"
               type="submit"
               className="mt-1 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3 rounded-xl transition-colors active:scale-[0.98]"
             >

@@ -16,4 +16,7 @@ test.only("New user end-to-end test", async ({ page }) => {
   
   const basketPage = new BasketPage(page);
   await basketPage.removeExpensiveTool();
+  await basketPage.proceedToPayment();
+  await basketPage.secureCheckout();
+
 });

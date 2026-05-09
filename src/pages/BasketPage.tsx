@@ -162,6 +162,7 @@ export default function BasketPage({ onShop }: BasketPageProps) {
             </div>
 
             <button
+              data-qa="proceed-to-payment"
               onClick={() => setShowPayment(true)}
               className="mt-6 w-full flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 text-white font-semibold py-3.5 rounded-xl transition-colors active:scale-[0.98]"
             >

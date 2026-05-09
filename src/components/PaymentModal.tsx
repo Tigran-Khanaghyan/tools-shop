@@ -100,13 +100,17 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
       className="fixed inset-0 z-50 bg-black/50 backdrop-blur-sm flex items-center justify-center p-4"
     >
       <div className="bg-white rounded-2xl shadow-2xl w-full max-w-md animate-in fade-in slide-in-from-bottom-4 duration-200">
-        {status === 'success' ? (
+        {status === "success" ? (
           <div className="flex flex-col items-center justify-center p-10 gap-4 text-center">
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
               <CheckCircle size={36} className="text-green-500" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">Payment Successful!</h2>
-            <p className="text-gray-500">Your order has been placed. Thank you for shopping at ToolShop!</p>
+            <h2 className="text-2xl font-bold text-gray-900">
+              Payment Successful!
+            </h2>
+            <p className="text-gray-500">
+              Your order has been placed. Thank you for shopping at ToolShop!
+            </p>
           </div>
         ) : (
           <>
@@ -114,31 +118,43 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
             <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
               <div className="flex items-center gap-2">
                 <CreditCard size={20} className="text-blue-600" />
-                <h2 className="text-lg font-semibold text-gray-900">Secure Checkout</h2>
+                <h2 className="text-lg font-semibold text-gray-900">
+                  Secure Checkout
+                </h2>
               </div>
               <button
                 onClick={onClose}
-                disabled={status === 'loading'}
+                disabled={status === "loading"}
                 className="p-1.5 rounded-lg text-gray-400 hover:text-gray-700 hover:bg-gray-100 transition-colors"
               >
                 <X size={18} />
               </button>
             </div>
 
-            <form onSubmit={handleSubmit} className="px-6 py-5 flex flex-col gap-4">
+            <form
+              onSubmit={handleSubmit}
+              className="px-6 py-5 flex flex-col gap-4"
+            >
               {/* Total */}
               <div className="bg-blue-50 rounded-xl px-4 py-3 flex items-center justify-between">
-                <span className="text-sm text-blue-700 font-medium">Total to pay</span>
-                <span className="text-xl font-bold text-blue-800">${total.toFixed(2)}</span>
+                <span className="text-sm text-blue-700 font-medium">
+                  Total to pay
+                </span>
+                <span className="text-xl font-bold text-blue-800">
+                  ${total.toFixed(2)}
+                </span>
               </div>
 
               {/* Cardholder Name */}
               <Field label="Cardholder Name" error={errors.cardholderName}>
                 <input
+                  data-qa="cardholder-name"
                   type="text"
                   placeholder="Jane Doe"
                   value={form.cardholderName}
-                  onChange={e => handleChange('cardholderName', e.target.value)}
+                  onChange={(e) =>
+                    handleChange("cardholderName", e.target.value)
+                  }
                   className={inputClass(!!errors.cardholderName)}
                 />
               </Field>
@@ -146,12 +162,18 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
               {/* Card Number */}
               <Field label="Card Number" error={errors.cardNumber}>
                 <input
+                  data-qa="card-number"
                   type="text"
                   inputMode="numeric"
                   placeholder="1234 5678 9012 3456"
                   value={form.cardNumber}
-                  onChange={e => handleChange('cardNumber', formatCardNumber(e.target.value))}
-                  className={inputClass(!!errors.cardNumber) + ' tracking-widest font-mono'}
+                  onChange={(e) =>
+                    handleChange("cardNumber", formatCardNumber(e.target.value))
+                  }
+                  className={
+                    inputClass(!!errors.cardNumber) +
+                    " tracking-widest font-mono"
+                  }
                 />
               </Field>
 
@@ -159,22 +181,31 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
               <div className="grid grid-cols-2 gap-3">
                 <Field label="Expiry" error={errors.expiry}>
                   <input
+                    data-qa="expiry"
                     type="text"
                     inputMode="numeric"
                     placeholder="MM/YY"
                     value={form.expiry}
-                    onChange={e => handleChange('expiry', formatExpiry(e.target.value))}
+                    onChange={(e) =>
+                      handleChange("expiry", formatExpiry(e.target.value))
+                    }
                     className={inputClass(!!errors.expiry)}
                   />
                 </Field>
                 <Field label="CVV" error={errors.cvv}>
                   <input
+                    data-qa="cvv"
                     type="password"
                     inputMode="numeric"
                     placeholder="•••"
                     maxLength={4}
                     value={form.cvv}
-                    onChange={e => handleChange('cvv', e.target.value.replace(/\D/g, '').slice(0, 4))}
+                    onChange={(e) =>
+                      handleChange(
+                        "cvv",
+                        e.target.value.replace(/\D/g, "").slice(0, 4),
+                      )
+                    }
                     className={inputClass(!!errors.cvv)}
                   />
                 </Field>
@@ -183,20 +214,24 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
               {/* Billing Address */}
               <Field label="Billing Address" error={errors.billingAddress}>
                 <input
+                  data-qa="billing-address"
                   type="text"
                   placeholder="123 Main St, City, State"
                   value={form.billingAddress}
-                  onChange={e => handleChange('billingAddress', e.target.value)}
+                  onChange={(e) =>
+                    handleChange("billingAddress", e.target.value)
+                  }
                   className={inputClass(!!errors.billingAddress)}
                 />
               </Field>
 
               <button
+                data-qa="submit-payment"
                 type="submit"
-                disabled={status === 'loading'}
+                disabled={status === "loading"}
                 className="mt-1 flex items-center justify-center gap-2 bg-blue-600 hover:bg-blue-700 disabled:opacity-60 text-white font-semibold py-3 rounded-xl transition-colors"
               >
-                {status === 'loading' ? (
+                {status === "loading" ? (
                   <>
                     <Loader size={18} className="animate-spin" />
                     Processing…
