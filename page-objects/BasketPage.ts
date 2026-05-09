@@ -12,6 +12,7 @@ export class BasketPage {
   private cvvInput: Locator;
   private billingAddressInput: Locator;
   private submitPaymentButton: Locator;
+  private paymentSuccesfulText: Locator;
 
   constructor(private page: Page) {
     this.basketCards = page.locator('[data-qa="basket-card"]');
@@ -29,6 +30,7 @@ export class BasketPage {
     this.cvvInput = page.locator('[data-qa="cvv"]');
     this.billingAddressInput = page.locator('[data-qa="billing-address"]');
     this.submitPaymentButton = page.locator('[data-qa="submit-payment"]');
+    this.paymentSuccesfulText = page.locator('[data-qa="payment-successful"]');
   }
 
   removeExpensiveTool = async () => {
@@ -70,5 +72,11 @@ export class BasketPage {
 
     await this.submitPaymentButton.waitFor();
     await this.submitPaymentButton.click();
+  };
+
+  checkPaymentStatus = async () => {
+    await this.paymentSuccesfulText.waitFor();
+    const successfulText = await this.paymentSuccesfulText.textContent();
+    expect(successfulText).toEqual("Payment Successful!");
   };
 }

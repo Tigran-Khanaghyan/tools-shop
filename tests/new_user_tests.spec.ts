@@ -18,5 +18,6 @@ test.only("New user end-to-end test", async ({ page }) => {
   await basketPage.removeExpensiveTool();
   await basketPage.proceedToPayment();
   await basketPage.secureCheckout();
+  await basketPage.checkPaymentStatus();
 
 });

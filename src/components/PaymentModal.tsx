@@ -105,7 +105,10 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
             <div className="w-16 h-16 bg-green-100 rounded-full flex items-center justify-center">
               <CheckCircle size={36} className="text-green-500" />
             </div>
-            <h2 className="text-2xl font-bold text-gray-900">
+            <h2
+              className="text-2xl font-bold text-gray-900"
+              data-qa="payment-successful"
+            >
               Payment Successful!
             </h2>
             <p className="text-gray-500">
