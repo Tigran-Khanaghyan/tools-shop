@@ -63,8 +63,14 @@ export class BasketPage {
     await this.cardholderNameInput.waitFor();
     await this.cardholderNameHiddenInput.waitFor();
     const cardHolderName = await this.cardholderNameHiddenInput.inputValue();
-    await this.cardholderNameInput.fill(cardHolderName);
-    await expect(this.cardholderNameInput).toHaveValue(cardHolderName);
+
+    //option 1
+    // await this.cardholderNameInput.fill(cardHolderName);
+    // await expect(this.cardholderNameInput).toHaveValue(cardHolderName);
+
+    await this.cardholderNameInput.focus();
+    await this.page.keyboard.type(cardHolderName, { delay: 1000 });
+    expect(await this.cardholderNameInput.inputValue()).toBe(cardHolderName);
 
     await this.cardNumberInput.waitFor();
     await this.cardNumberInput.fill("1234567890123456");
