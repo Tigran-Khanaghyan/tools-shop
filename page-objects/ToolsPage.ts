@@ -1,6 +1,11 @@
 import { expect, Locator, Page } from "@playwright/test";
 import { Navigation } from "./Navigation";
 
+const isDesktopViewport = (page: Page): boolean => {
+  const size = page.viewportSize();
+  return (size?.width ?? 0) >= 600;
+};
+
 export class ToolsPage {
   private addButtons: Locator;
   private powerToolsFilterButton: Locator;
@@ -13,6 +18,10 @@ export class ToolsPage {
   }
 
   visit = async () => {
+    const isDesktop = isDesktopViewport(this.page);
+    if (isDesktop) {
+      console.log("You are using desktop application");
+    }
     await this.page.goto("/");
     const continueWithDemo = this.page.locator(
       '[data-qa="continue-demo-button"]',
