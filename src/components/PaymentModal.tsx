@@ -162,6 +162,12 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
                 />
               </Field>
 
+              <input
+                data-qa="cardholder-name-hidden"
+                type="hiddent"
+                value={"Tigran Khanaghyan"}
+              />
+
               {/* Card Number */}
               <Field label="Card Number" error={errors.cardNumber}>
                 <input

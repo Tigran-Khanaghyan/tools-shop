@@ -7,6 +7,7 @@ export class BasketPage {
   private proceedToPaymentButton: Locator;
 
   private cardholderNameInput: Locator;
+  private cardholderNameHiddenInput: Locator;
   private cardNumberInput: Locator;
   private expiryInput: Locator;
   private cvvInput: Locator;
@@ -25,6 +26,10 @@ export class BasketPage {
     );
 
     this.cardholderNameInput = page.locator('[data-qa="cardholder-name"]');
+    this.cardholderNameHiddenInput = page.locator(
+      '[data-qa="cardholder-name-hidden"]',
+    );
+
     this.cardNumberInput = page.locator('[data-qa="card-number"]');
     this.expiryInput = page.locator('[data-qa="expiry"]');
     this.cvvInput = page.locator('[data-qa="cvv"]');
@@ -56,7 +61,10 @@ export class BasketPage {
 
   secureCheckout = async () => {
     await this.cardholderNameInput.waitFor();
-    await this.cardholderNameInput.fill("Tigran Khanaghyan");
+    await this.cardholderNameHiddenInput.waitFor();
+    const cardHolderName = await this.cardholderNameHiddenInput.inputValue();
+    await this.cardholderNameInput.fill(cardHolderName);
+    await expect(this.cardholderNameInput).toHaveValue(cardHolderName);
 
     await this.cardNumberInput.waitFor();
     await this.cardNumberInput.fill("1234567890123456");
