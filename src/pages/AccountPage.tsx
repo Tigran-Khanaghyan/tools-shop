@@ -1,9 +1,9 @@
 import { useState, useEffect } from 'react';
-import { User, Mail, Phone, MapPin, CreditCard as Edit3, Save, X, CheckCircle } from 'lucide-react';
+import { User, Mail, Phone, MapPin, CreditCard as Edit3, Save, X, CheckCircle, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
 export default function AccountPage() {
-  const { user, updateUser } = useAuth();
+  const { user, updateUser, isLoading, error, clearError } = useAuth();
   const [editing, setEditing] = useState(false);
   const [saved, setSaved] = useState(false);
   const [form, setForm] = useState({
@@ -15,28 +15,47 @@ export default function AccountPage() {
 
   useEffect(() => {
     if (user) {
-      setForm({ name: user.name, email: user.email, phone: user.phone, address: user.address });
+      setForm({ 
+        name: user.name, 
+        email: user.email, 
+        phone: user.phone || '', 
+        address: user.address || '' 
+      });
     }
   }, [user]);
 
-  const handleSave = () => {
+  const handleSave = async () => {
     if (!user) return;
-    updateUser({ ...user, ...form });
-    setEditing(false);
-    setSaved(true);
-    setTimeout(() => setSaved(false), 3000);
+    clearError();
+    const success = await updateUser({ 
+      ...user, 
+      name: form.name,
+      phone: form.phone,
+      address: form.address,
+    });
+    if (success) {
+      setEditing(false);
+      setSaved(true);
+      setTimeout(() => setSaved(false), 3000);
+    }
   };
 
   const handleCancel = () => {
-    if (user) setForm({ name: user.name, email: user.email, phone: user.phone, address: user.address });
+    if (user) setForm({ 
+      name: user.name, 
+      email: user.email, 
+      phone: user.phone || '', 
+      address: user.address || '' 
+    });
     setEditing(false);
+    clearError();
   };
 
   const fields = [
-    { key: 'name' as const, label: 'Full Name', icon: <User size={16} />, type: 'text', placeholder: 'Your name' },
-    { key: 'email' as const, label: 'Email Address', icon: <Mail size={16} />, type: 'email', placeholder: 'you@example.com' },
-    { key: 'phone' as const, label: 'Phone Number', icon: <Phone size={16} />, type: 'tel', placeholder: '+1 (555) 000-0000' },
-    { key: 'address' as const, label: 'Shipping Address', icon: <MapPin size={16} />, type: 'text', placeholder: '123 Main St, City, State' },
+    { key: 'name' as const, label: 'Full Name', icon: <User size={16} />, type: 'text', placeholder: 'Your name', editable: true },
+    { key: 'email' as const, label: 'Email Address', icon: <Mail size={16} />, type: 'email', placeholder: 'you@example.com', editable: false },
+    { key: 'phone' as const, label: 'Phone Number', icon: <Phone size={16} />, type: 'tel', placeholder: '+1 (555) 000-0000', editable: true },
+    { key: 'address' as const, label: 'Shipping Address', icon: <MapPin size={16} />, type: 'text', placeholder: '123 Main St, City, State', editable: true },
   ];
 
   return (
@@ -66,6 +85,13 @@ export default function AccountPage() {
         )}
       </div>
 
+      {/* Error display */}
+      {error && (
+        <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl">
+          {error}
+        </div>
+      )}
+
       {/* Profile Form */}
       <div className="bg-white rounded-2xl border border-gray-100 shadow-sm">
         <div className="flex items-center justify-between px-6 py-4 border-b border-gray-100">
@@ -82,16 +108,22 @@ export default function AccountPage() {
             <div className="flex gap-2">
               <button
                 onClick={handleCancel}
-                className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors"
+                disabled={isLoading}
+                className="flex items-center gap-1 text-sm text-gray-500 hover:text-gray-700 px-3 py-1.5 rounded-lg border border-gray-200 hover:bg-gray-50 transition-colors disabled:opacity-50"
               >
                 <X size={14} />
                 Cancel
               </button>
               <button
                 onClick={handleSave}
-                className="flex items-center gap-1 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-lg transition-colors"
+                disabled={isLoading}
+                className="flex items-center gap-1 text-sm text-white bg-blue-600 hover:bg-blue-700 px-3 py-1.5 rounded-lg transition-colors disabled:bg-blue-400"
               >
-                <Save size={14} />
+                {isLoading ? (
+                  <Loader2 size={14} className="animate-spin" />
+                ) : (
+                  <Save size={14} />
+                )}
                 Save
               </button>
             </div>
@@ -99,12 +131,12 @@ export default function AccountPage() {
         </div>
 
         <div className="divide-y divide-gray-50">
-          {fields.map(({ key, label, icon, type, placeholder }) => (
+          {fields.map(({ key, label, icon, type, placeholder, editable }) => (
             <div key={key} className="px-6 py-4 flex items-start gap-3">
               <div className="mt-0.5 text-gray-400 flex-shrink-0">{icon}</div>
               <div className="flex-1 min-w-0">
                 <p className="text-xs font-medium text-gray-500 mb-1">{label}</p>
-                {editing ? (
+                {editing && editable ? (
                   <input
                     type={type}
                     value={form[key]}

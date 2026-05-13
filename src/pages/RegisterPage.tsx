@@ -1,13 +1,16 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
-import { Wrench, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
+import { Wrench, Mail, Lock, Eye, EyeOff, User, Loader2 } from 'lucide-react';
 import { useAuth } from '../context/AuthContext';
 
-export default function LoginPage() {
-  const { login, isLoading, error, clearError } = useAuth();
+export default function RegisterPage() {
+  const { register, isLoading, error, clearError } = useAuth();
+  const [name, setName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [confirmPassword, setConfirmPassword] = useState('');
   const [showPw, setShowPw] = useState(false);
+  const [showConfirmPw, setShowConfirmPw] = useState(false);
   const [localError, setLocalError] = useState('');
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -15,15 +18,28 @@ export default function LoginPage() {
     setLocalError('');
     clearError();
 
-    if (!email.trim() || !password.trim()) {
-      setLocalError('Please enter your email and password.');
+    if (!name.trim() || !email.trim() || !password.trim()) {
+      setLocalError('Please fill in all fields.');
       return;
     }
     if (!email.includes('@')) {
       setLocalError('Please enter a valid email address.');
       return;
     }
-    await login(email, password);
+    if (password.length < 6) {
+      setLocalError('Password must be at least 6 characters.');
+      return;
+    }
+    if (!/\d/.test(password)) {
+      setLocalError('Password must contain at least one number.');
+      return;
+    }
+    if (password !== confirmPassword) {
+      setLocalError('Passwords do not match.');
+      return;
+    }
+
+    await register(email, password, name);
   };
 
   const displayError = localError || error;
@@ -45,9 +61,9 @@ export default function LoginPage() {
         {/* Card */}
         <div className="bg-white rounded-2xl shadow-sm border border-gray-100 p-8">
           <h2 className="text-xl font-semibold text-gray-900 mb-1">
-            Welcome back
+            Create an account
           </h2>
-          <p className="text-sm text-gray-500 mb-6">Sign in to your account</p>
+          <p className="text-sm text-gray-500 mb-6">Sign up to get started</p>
 
           {displayError && (
             <div className="mb-4 bg-red-50 border border-red-200 text-red-600 text-sm px-4 py-3 rounded-xl">
@@ -56,6 +72,26 @@ export default function LoginPage() {
           )}
 
           <form onSubmit={handleSubmit} className="flex flex-col gap-4">
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-700">Name</label>
+              <div className="relative">
+                <User
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  type="text"
+                  placeholder="Your name"
+                  value={name}
+                  onChange={(e) => {
+                    setName(e.target.value);
+                    setLocalError('');
+                  }}
+                  className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+                />
+              </div>
+            </div>
+
             <div className="flex flex-col gap-1.5">
               <label className="text-sm font-medium text-gray-700">Email</label>
               <div className="relative">
@@ -87,7 +123,7 @@ export default function LoginPage() {
                 />
                 <input
                   type={showPw ? 'text' : 'password'}
-                  placeholder="Enter your password"
+                  placeholder="Min. 6 characters with a number"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
@@ -105,8 +141,37 @@ export default function LoginPage() {
               </div>
             </div>
 
+            <div className="flex flex-col gap-1.5">
+              <label className="text-sm font-medium text-gray-700">
+                Confirm Password
+              </label>
+              <div className="relative">
+                <Lock
+                  size={16}
+                  className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
+                />
+                <input
+                  type={showConfirmPw ? 'text' : 'password'}
+                  placeholder="Confirm your password"
+                  value={confirmPassword}
+                  onChange={(e) => {
+                    setConfirmPassword(e.target.value);
+                    setLocalError('');
+                  }}
+                  className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
+                />
+                <button
+                  type="button"
+                  onClick={() => setShowConfirmPw((s) => !s)}
+                  className="absolute right-3 top-1/2 -translate-y-1/2 text-gray-400 hover:text-gray-600"
+                >
+                  {showConfirmPw ? <EyeOff size={16} /> : <Eye size={16} />}
+                </button>
+              </div>
+            </div>
+
             <button
-              data-qa="submit-login"
+              data-qa="submit-register"
               type="submit"
               disabled={isLoading}
               className="mt-1 bg-blue-600 hover:bg-blue-700 disabled:bg-blue-400 text-white font-semibold py-3 rounded-xl transition-colors active:scale-[0.98] flex items-center justify-center gap-2"
@@ -114,30 +179,26 @@ export default function LoginPage() {
               {isLoading ? (
                 <>
                   <Loader2 size={18} className="animate-spin" />
-                  Signing in...
+                  Creating account...
                 </>
               ) : (
-                'Sign In'
+                'Create Account'
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">
-              {"Don't have an account?"}{' '}
+              Already have an account?{' '}
               <Link
-                to="/register"
+                to="/login"
                 className="text-blue-600 hover:text-blue-700 font-medium"
               >
-                Sign up
+                Sign in
               </Link>
             </p>
           </div>
         </div>
-
-        <p className="text-center text-xs text-gray-400 mt-6">
-          Connect to the backend server at localhost:5000 before signing in.
-        </p>
       </div>
     </div>
   );
