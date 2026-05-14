@@ -22,12 +22,6 @@ export class ToolsPage {
     if (isDesktop) {
       console.log("You are using desktop application");
     }
-    await this.page.goto("/");
-    const continueWithDemo = this.page.locator(
-      '[data-qa="continue-demo-button"]',
-    );
-    await continueWithDemo.waitFor();
-    await continueWithDemo.click();
     await this.page.goto("/tools");
   };
 

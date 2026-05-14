@@ -1,7 +1,7 @@
 import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { Wrench, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 export default function LoginPage() {
   const { login, isLoading, error, clearError } = useAuth();
@@ -64,12 +64,13 @@ export default function LoginPage() {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 />
                 <input
+                  data-qa="login-email"
                   type="email"
                   placeholder="you@example.com"
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -86,12 +87,13 @@ export default function LoginPage() {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 />
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  data-qa="login-password"
+                  type={showPw ? "text" : "password"}
                   placeholder="Enter your password"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -117,14 +119,14 @@ export default function LoginPage() {
                   Signing in...
                 </>
               ) : (
-                'Sign In'
+                "Sign In"
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">
-              {"Don't have an account?"}{' '}
+              {"Don't have an account?"}{" "}
               <Link
                 to="/register"
                 className="text-blue-600 hover:text-blue-700 font-medium"

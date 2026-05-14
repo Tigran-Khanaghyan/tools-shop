@@ -1,19 +1,7 @@
-import React, { createContext, useContext, useState, useEffect, useCallback } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { User } from '../types';
 import { authApi } from '../services/api';
-
-interface AuthContextType {
-  user: User | null;
-  isLoading: boolean;
-  error: string | null;
-  login: (email: string, password: string) => Promise<boolean>;
-  register: (email: string, password: string, name: string) => Promise<boolean>;
-  logout: () => void;
-  updateUser: (data: Partial<User>) => Promise<boolean>;
-  clearError: () => void;
-}
-
-const AuthContext = createContext<AuthContextType | null>(null);
+import { AuthContext } from './auth-context';
 
 const TOKEN_KEY = 'toolshop_token';
 const USER_KEY = 'toolshop_user';
@@ -32,7 +20,8 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
     if (token && !user) {
       // Verify token by fetching user
       setIsLoading(true);
-      authApi.getMe()
+      authApi
+        .getMe()
         .then((response) => {
           if (response.success && response.data?.user) {
             setUser(response.data.user);
@@ -48,7 +37,7 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
           setIsLoading(false);
         });
     }
-  }, []);
+  }, [user]);
 
   const login = useCallback(async (email: string, password: string): Promise<boolean> => {
     setIsLoading(true);
@@ -144,10 +133,4 @@ export function AuthProvider({ children }: { children: React.ReactNode }) {
       {children}
     </AuthContext.Provider>
   );
-}
-
-export function useAuth() {
-  const ctx = useContext(AuthContext);
-  if (!ctx) throw new Error('useAuth must be used within AuthProvider');
-  return ctx;
 }

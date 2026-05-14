@@ -1,6 +1,6 @@
 import { useState, useEffect } from 'react';
 import { User, Mail, Phone, MapPin, CreditCard as Edit3, Save, X, CheckCircle, Loader2 } from 'lucide-react';
-import { useAuth } from '../context/AuthContext';
+import { useAuth } from '../context/useAuth';
 
 export default function AccountPage() {
   const { user, updateUser, isLoading, error, clearError } = useAuth();
