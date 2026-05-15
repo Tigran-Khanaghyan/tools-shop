@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "playwright test --headed",
+    "ui": "playwright test --ui",
     "typecheck": "tsc --noEmit -p tsconfig.app.json"
   },
   "dependencies": {
