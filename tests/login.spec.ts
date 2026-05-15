@@ -1,7 +1,7 @@
 import test from "@playwright/test";
 import { LoginPage } from "../page-objects/LoginPage";
 
-test.only("login test and mocking network requests", async ({ page }) => {
+test("login test and mocking network requests", async ({ page }) => {
   const loginPage = new LoginPage(page);
   await loginPage.visit();
   await page.pause();

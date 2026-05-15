@@ -17,6 +17,8 @@ export default defineConfig({
   timeout: 30 * 1000,
 
   fullyParallel: true,
+
+  forbidOnly: false,
   /* Fail the build on CI if you accidentally left test.only in the source code. */
   // forbidOnly: !!process.env.CI,
   // /* Retry on CI only */
@@ -49,10 +51,10 @@ export default defineConfig({
     //   use: { ...devices['Desktop Safari'] },
     // },
     /* Test against mobile viewports. */
-    // {
-    //   name: "Mobile Chrome",
-    //   use: { ...devices["Pixel 5"] },
-    // },
+    {
+      name: "Mobile Chrome",
+      use: { ...devices["Pixel 5"] },
+    },
     // {
     //   name: 'Mobile Safari',
     //   use: { ...devices['iPhone 12'] },
