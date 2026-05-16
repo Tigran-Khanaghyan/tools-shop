@@ -1,7 +1,7 @@
-const bcrypt = require('bcrypt');
-const { validationResult } = require('express-validator');
-const prisma = require('../config/database');
-const { generateToken } = require('../utils/jwt');
+const bcrypt = require("bcrypt");
+const { validationResult } = require("express-validator");
+const prisma = require("../config/database");
+const { generateToken } = require("../utils/jwt");
 
 // Register a new user
 const register = async (req, res, next) => {
@@ -11,7 +11,7 @@ const register = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        message: 'Validation failed',
+        message: "Validation failed",
         errors: errors.array(),
       });
     }
@@ -26,7 +26,7 @@ const register = async (req, res, next) => {
     if (existingUser) {
       return res.status(400).json({
         success: false,
-        message: 'User with this email already exists',
+        message: "User with this email already exists",
       });
     }
 
@@ -56,7 +56,7 @@ const register = async (req, res, next) => {
 
     res.status(201).json({
       success: true,
-      message: 'User registered successfully',
+      message: "User registered successfully",
       data: {
         user,
         token,
@@ -75,7 +75,7 @@ const login = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        message: 'Validation failed',
+        message: "Validation failed",
         errors: errors.array(),
       });
     }
@@ -90,7 +90,7 @@ const login = async (req, res, next) => {
     if (!user) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid email or password',
+        message: "Invalid email or password",
       });
     }
 
@@ -100,7 +100,7 @@ const login = async (req, res, next) => {
     if (!isPasswordValid) {
       return res.status(401).json({
         success: false,
-        message: 'Invalid email or password',
+        message: "Invalid email or password",
       });
     }
 
@@ -112,7 +112,7 @@ const login = async (req, res, next) => {
 
     res.json({
       success: true,
-      message: 'Login successful',
+      message: "Login successful",
       data: {
         user: userWithoutPassword,
         token,
@@ -141,7 +141,7 @@ const updateProfile = async (req, res, next) => {
     if (!errors.isEmpty()) {
       return res.status(400).json({
         success: false,
-        message: 'Validation failed',
+        message: "Validation failed",
         errors: errors.array(),
       });
     }
@@ -167,7 +167,7 @@ const updateProfile = async (req, res, next) => {
 
     res.json({
       success: true,
-      message: 'Profile updated successfully',
+      message: "Profile updated successfully",
       data: {
         user: updatedUser,
       },
@@ -181,7 +181,7 @@ const updateProfile = async (req, res, next) => {
 const logout = async (req, res) => {
   res.json({
     success: true,
-    message: 'Logged out successfully',
+    message: "Logged out successfully",
   });
 };
 

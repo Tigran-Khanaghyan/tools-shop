@@ -4,7 +4,7 @@ A full-stack e-commerce application with local PostgreSQL, Express backend, Pris
 
 ## Prerequisites
 
-- Node.js 18+ 
+- Node.js 18+
 - PostgreSQL installed and running locally
 - npm or yarn
 
@@ -40,12 +40,14 @@ A full-stack e-commerce application with local PostgreSQL, Express backend, Pris
 ### 1. Install PostgreSQL
 
 **macOS (Homebrew):**
+
 ```bash
 brew install postgresql@15
 brew services start postgresql@15
 ```
 
 **Ubuntu/Debian:**
+
 ```bash
 sudo apt update
 sudo apt install postgresql postgresql-contrib
@@ -127,15 +129,15 @@ The frontend will run at **http://localhost:5173** (Vite default)
 
 ## API Endpoints
 
-| Method | Endpoint | Description | Auth Required |
-|--------|----------|-------------|---------------|
-| POST | `/api/auth/register` | Register new user | No |
-| POST | `/api/auth/login` | Login user | No |
-| GET | `/api/auth/me` | Get current user | Yes |
-| PUT | `/api/auth/profile` | Update profile | Yes |
-| POST | `/api/auth/logout` | Logout user | Yes |
-| GET | `/api/protected` | Protected route example | Yes |
-| GET | `/api/health` | Health check | No |
+| Method | Endpoint             | Description             | Auth Required |
+| ------ | -------------------- | ----------------------- | ------------- |
+| POST   | `/api/auth/register` | Register new user       | No            |
+| POST   | `/api/auth/login`    | Login user              | No            |
+| GET    | `/api/auth/me`       | Get current user        | Yes           |
+| PUT    | `/api/auth/profile`  | Update profile          | Yes           |
+| POST   | `/api/auth/logout`   | Logout user             | Yes           |
+| GET    | `/api/protected`     | Protected route example | Yes           |
+| GET    | `/api/health`        | Health check            | No            |
 
 ## Authentication Flow
 
@@ -192,19 +194,19 @@ npx prisma studio
 
 ### Backend (.env)
 
-| Variable | Description | Example |
-|----------|-------------|---------|
-| DATABASE_URL | PostgreSQL connection string | `postgresql://postgres:password@localhost:5432/toolshop` |
-| JWT_SECRET | Secret key for JWT signing | `your-super-secret-key` |
-| JWT_EXPIRES_IN | Token expiration time | `7d` |
-| PORT | Server port | `5000` |
-| NODE_ENV | Environment | `development` |
-| FRONTEND_URL | CORS allowed origin | `http://localhost:5173` |
+| Variable       | Description                  | Example                                                  |
+| -------------- | ---------------------------- | -------------------------------------------------------- |
+| DATABASE_URL   | PostgreSQL connection string | `postgresql://postgres:password@localhost:5432/toolshop` |
+| JWT_SECRET     | Secret key for JWT signing   | `your-super-secret-key`                                  |
+| JWT_EXPIRES_IN | Token expiration time        | `7d`                                                     |
+| PORT           | Server port                  | `5000`                                                   |
+| NODE_ENV       | Environment                  | `development`                                            |
+| FRONTEND_URL   | CORS allowed origin          | `http://localhost:5173`                                  |
 
 ### Frontend (.env.local)
 
-| Variable | Description | Example |
-|----------|-------------|---------|
+| Variable     | Description     | Example                     |
+| ------------ | --------------- | --------------------------- |
 | VITE_API_URL | Backend API URL | `http://localhost:5000/api` |
 
 ## Troubleshooting
@@ -212,10 +214,11 @@ npx prisma studio
 ### Database Connection Issues
 
 1. Ensure PostgreSQL is running:
+
    ```bash
    # macOS
    brew services list
-   
+
    # Linux
    sudo systemctl status postgresql
    ```
@@ -240,6 +243,7 @@ Update `FRONTEND_URL` in backend `.env` to match your frontend URL.
 ## Tech Stack
 
 **Backend:**
+
 - Express.js
 - Prisma ORM
 - PostgreSQL
@@ -248,6 +252,7 @@ Update `FRONTEND_URL` in backend `.env` to match your frontend URL.
 - express-validator
 
 **Frontend:**
+
 - React 18
 - Vite
 - TypeScript

@@ -1,19 +1,20 @@
-import { useState, useMemo } from 'react';
-import { Search, SlidersHorizontal, PackageSearch } from 'lucide-react';
-import { TOOLS, CATEGORIES } from '../data/tools';
-import ToolCard from '../components/ToolCard';
+import { useState, useMemo } from "react";
+import { Search, SlidersHorizontal, PackageSearch } from "lucide-react";
+import { TOOLS, CATEGORIES } from "../data/tools";
+import ToolCard from "../components/ToolCard";
 
 export default function ToolsPage() {
-  const [query, setQuery] = useState('');
-  const [activeCategory, setActiveCategory] = useState('All');
+  const [query, setQuery] = useState("");
+  const [activeCategory, setActiveCategory] = useState("All");
 
   const filtered = useMemo(() => {
-    return TOOLS.filter(tool => {
+    return TOOLS.filter((tool) => {
       const matchesQuery =
         !query ||
         tool.name.toLowerCase().includes(query.toLowerCase()) ||
         tool.description.toLowerCase().includes(query.toLowerCase());
-      const matchesCategory = activeCategory === 'All' || tool.category === activeCategory;
+      const matchesCategory =
+        activeCategory === "All" || tool.category === activeCategory;
       return matchesQuery && matchesCategory;
     });
   }, [query, activeCategory]);

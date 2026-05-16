@@ -1,7 +1,7 @@
-import { ShoppingCart, Tag } from 'lucide-react';
-import { Tool } from '../types';
-import { useCart } from '../context/CartContext';
-import { useState } from 'react';
+import { ShoppingCart, Tag } from "lucide-react";
+import { Tool } from "../types";
+import { useCart } from "../context/CartContext";
+import { useState } from "react";
 
 interface ToolCardProps {
   tool: Tool;
@@ -11,7 +11,7 @@ export default function ToolCard({ tool }: ToolCardProps) {
   const { addToCart, items } = useCart();
   const [added, setAdded] = useState(false);
 
-  const inCart = items.find(i => i.tool.id === tool.id);
+  const inCart = items.find((i) => i.tool.id === tool.id);
 
   const handleAdd = () => {
     addToCart(tool);

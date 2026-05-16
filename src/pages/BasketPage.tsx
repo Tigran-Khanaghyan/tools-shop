@@ -1,14 +1,15 @@
-import { useState } from 'react';
-import { Trash2, Plus, Minus, ShoppingBag, ShoppingCart } from 'lucide-react';
-import { useCart } from '../context/CartContext';
-import PaymentModal from '../components/PaymentModal';
+import { useState } from "react";
+import { Trash2, Plus, Minus, ShoppingBag, ShoppingCart } from "lucide-react";
+import { useCart } from "../context/CartContext";
+import PaymentModal from "../components/PaymentModal";
 
 interface BasketPageProps {
   onShop: () => void;
 }
 
 export default function BasketPage({ onShop }: BasketPageProps) {
-  const { items, removeFromCart, updateQuantity, clearCart, subtotal } = useCart();
+  const { items, removeFromCart, updateQuantity, clearCart, subtotal } =
+    useCart();
   const [showPayment, setShowPayment] = useState(false);
 
   const shipping = subtotal >= 100 ? 0 : 9.99;
@@ -20,9 +21,12 @@ export default function BasketPage({ onShop }: BasketPageProps) {
         <div className="w-20 h-20 bg-gray-100 rounded-3xl flex items-center justify-center mb-5">
           <ShoppingCart size={36} className="text-gray-400" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">Your basket is empty</h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">
+          Your basket is empty
+        </h2>
         <p className="text-gray-500 mb-6 max-w-xs">
-          Looks like you haven't added any tools yet. Start browsing our collection.
+          Looks like you haven't added any tools yet. Start browsing our
+          collection.
         </p>
         <button
           onClick={onShop}

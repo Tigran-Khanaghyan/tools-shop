@@ -1,7 +1,7 @@
 name: Playwritght tests
-on: 
+on:
   push:
-    branches: [ main ]
+    branches: [main]
 jobs:
   playwrighttests:
     runs-on: ubuntu-latest

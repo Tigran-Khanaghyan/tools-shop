@@ -1,10 +1,16 @@
-import { ShoppingCart, Wrench, User, LayoutGrid, LogOut } from 'lucide-react';
-import { useLocation, useNavigate } from 'react-router-dom';
-import { useAuth } from '../context/useAuth';
-import { useCart } from '../context/CartContext';
+import { ShoppingCart, Wrench, User, LayoutGrid, LogOut } from "lucide-react";
+import { useLocation, useNavigate } from "react-router-dom";
+import { useAuth } from "../context/useAuth";
+import { useCart } from "../context/CartContext";
 
-type Page = 'account' | 'tools' | 'basket';
-type NavItem = { page: Page; label: string; path: string; icon: React.ReactNode, dataId: string };
+type Page = "account" | "tools" | "basket";
+type NavItem = {
+  page: Page;
+  label: string;
+  path: string;
+  icon: React.ReactNode;
+  dataId: string;
+};
 
 export default function Header() {
   const { logout } = useAuth();
@@ -13,9 +19,27 @@ export default function Header() {
   const location = useLocation();
 
   const navItems: NavItem[] = [
-    { page: 'account', label: 'Account', path: '/account', icon: <User size={16} /> , dataId: "nav-account"},
-    { page: 'tools', label: 'My Tools', path: '/tools', icon: <LayoutGrid size={16} />, dataId: "" },
-    { page: 'basket', label: 'Basket', path: '/basket', icon: <ShoppingCart size={16} />, dataId: "nav-basket" },
+    {
+      page: "account",
+      label: "Account",
+      path: "/account",
+      icon: <User size={16} />,
+      dataId: "nav-account",
+    },
+    {
+      page: "tools",
+      label: "My Tools",
+      path: "/tools",
+      icon: <LayoutGrid size={16} />,
+      dataId: "",
+    },
+    {
+      page: "basket",
+      label: "Basket",
+      path: "/basket",
+      icon: <ShoppingCart size={16} />,
+      dataId: "nav-basket",
+    },
   ];
 
   return (

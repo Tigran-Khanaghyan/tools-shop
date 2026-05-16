@@ -1,41 +1,41 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Wrench, Mail, Lock, Eye, EyeOff, User, Loader2 } from 'lucide-react';
-import { useAuth } from '../context/useAuth';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Wrench, Mail, Lock, Eye, EyeOff, User, Loader2 } from "lucide-react";
+import { useAuth } from "../context/useAuth";
 
 export default function RegisterPage() {
   const { register, isLoading, error, clearError } = useAuth();
-  const [name, setName] = useState('');
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
-  const [confirmPassword, setConfirmPassword] = useState('');
+  const [name, setName] = useState("");
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
   const [showConfirmPw, setShowConfirmPw] = useState(false);
-  const [localError, setLocalError] = useState('');
+  const [localError, setLocalError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLocalError('');
+    setLocalError("");
     clearError();
 
     if (!name.trim() || !email.trim() || !password.trim()) {
-      setLocalError('Please fill in all fields.');
+      setLocalError("Please fill in all fields.");
       return;
     }
-    if (!email.includes('@')) {
-      setLocalError('Please enter a valid email address.');
+    if (!email.includes("@")) {
+      setLocalError("Please enter a valid email address.");
       return;
     }
     if (password.length < 6) {
-      setLocalError('Password must be at least 6 characters.');
+      setLocalError("Password must be at least 6 characters.");
       return;
     }
     if (!/\d/.test(password)) {
-      setLocalError('Password must contain at least one number.');
+      setLocalError("Password must contain at least one number.");
       return;
     }
     if (password !== confirmPassword) {
-      setLocalError('Passwords do not match.');
+      setLocalError("Passwords do not match.");
       return;
     }
 
@@ -85,7 +85,7 @@ export default function RegisterPage() {
                   value={name}
                   onChange={(e) => {
                     setName(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -105,7 +105,7 @@ export default function RegisterPage() {
                   value={email}
                   onChange={(e) => {
                     setEmail(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-4 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -122,12 +122,12 @@ export default function RegisterPage() {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 />
                 <input
-                  type={showPw ? 'text' : 'password'}
+                  type={showPw ? "text" : "password"}
                   placeholder="Min. 6 characters with a number"
                   value={password}
                   onChange={(e) => {
                     setPassword(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -151,12 +151,12 @@ export default function RegisterPage() {
                   className="absolute left-3 top-1/2 -translate-y-1/2 text-gray-400"
                 />
                 <input
-                  type={showConfirmPw ? 'text' : 'password'}
+                  type={showConfirmPw ? "text" : "password"}
                   placeholder="Confirm your password"
                   value={confirmPassword}
                   onChange={(e) => {
                     setConfirmPassword(e.target.value);
-                    setLocalError('');
+                    setLocalError("");
                   }}
                   className="w-full pl-9 pr-10 py-2.5 rounded-xl border border-gray-200 text-sm outline-none focus:border-blue-400 focus:ring-2 focus:ring-blue-100 transition-colors"
                 />
@@ -182,14 +182,14 @@ export default function RegisterPage() {
                   Creating account...
                 </>
               ) : (
-                'Create Account'
+                "Create Account"
               )}
             </button>
           </form>
 
           <div className="mt-6 text-center">
             <p className="text-sm text-gray-500">
-              Already have an account?{' '}
+              Already have an account?{" "}
               <Link
                 to="/login"
                 className="text-blue-600 hover:text-blue-700 font-medium"

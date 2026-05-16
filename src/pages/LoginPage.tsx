@@ -1,26 +1,26 @@
-import { useState } from 'react';
-import { Link } from 'react-router-dom';
-import { Wrench, Mail, Lock, Eye, EyeOff, Loader2 } from 'lucide-react';
-import { useAuth } from '../context/useAuth';
+import { useState } from "react";
+import { Link } from "react-router-dom";
+import { Wrench, Mail, Lock, Eye, EyeOff, Loader2 } from "lucide-react";
+import { useAuth } from "../context/useAuth";
 
 export default function LoginPage() {
   const { login, isLoading, error, clearError } = useAuth();
-  const [email, setEmail] = useState('');
-  const [password, setPassword] = useState('');
+  const [email, setEmail] = useState("");
+  const [password, setPassword] = useState("");
   const [showPw, setShowPw] = useState(false);
-  const [localError, setLocalError] = useState('');
+  const [localError, setLocalError] = useState("");
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    setLocalError('');
+    setLocalError("");
     clearError();
 
     if (!email.trim() || !password.trim()) {
-      setLocalError('Please enter your email and password.');
+      setLocalError("Please enter your email and password.");
       return;
     }
-    if (!email.includes('@')) {
-      setLocalError('Please enter a valid email address.');
+    if (!email.includes("@")) {
+      setLocalError("Please enter a valid email address.");
       return;
     }
     await login(email, password);

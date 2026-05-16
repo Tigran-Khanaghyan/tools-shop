@@ -1,13 +1,13 @@
-import { Navigate, Route, Routes, useNavigate } from 'react-router-dom';
-import { AuthProvider } from './context/AuthContext';
-import { useAuth } from './context/useAuth';
-import LoginPage from './pages/LoginPage';
-import RegisterPage from './pages/RegisterPage';
-import Header from './components/Header';
-import AccountPage from './pages/AccountPage';
-import ToolsPage from './pages/ToolsPage';
-import BasketPage from './pages/BasketPage';
-import { CartProvider } from './context/CartContext';
+import { Navigate, Route, Routes, useNavigate } from "react-router-dom";
+import { AuthProvider } from "./context/AuthContext";
+import { useAuth } from "./context/useAuth";
+import LoginPage from "./pages/LoginPage";
+import RegisterPage from "./pages/RegisterPage";
+import Header from "./components/Header";
+import AccountPage from "./pages/AccountPage";
+import ToolsPage from "./pages/ToolsPage";
+import BasketPage from "./pages/BasketPage";
+import { CartProvider } from "./context/CartContext";
 
 function AuthRoutes() {
   return (
@@ -41,7 +41,10 @@ function AppShell() {
         <Routes>
           <Route path="/account" element={<AccountPage />} />
           <Route path="/tools" element={<ToolsPage />} />
-          <Route path="/basket" element={<BasketPage onShop={() => navigate('/tools')} />} />
+          <Route
+            path="/basket"
+            element={<BasketPage onShop={() => navigate("/tools")} />}
+          />
           <Route path="*" element={<Navigate to="/tools" replace />} />
         </Routes>
       </main>

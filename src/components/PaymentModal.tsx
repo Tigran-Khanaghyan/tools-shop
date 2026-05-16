@@ -1,6 +1,6 @@
-import { useState, useRef, useEffect } from 'react';
-import { X, CreditCard, Lock, CheckCircle, Loader } from 'lucide-react';
-import { useCart } from '../context/CartContext';
+import { useState, useRef, useEffect } from "react";
+import { X, CreditCard, Lock, CheckCircle, Loader } from "lucide-react";
+import { useCart } from "../context/CartContext";
 
 interface PaymentModalProps {
   onClose: () => void;
@@ -23,50 +23,65 @@ interface Errors {
   billingAddress?: string;
 }
 
-type Status = 'idle' | 'loading' | 'success';
+type Status = "idle" | "loading" | "success";
 
 function formatCardNumber(value: string) {
-  return value.replace(/\D/g, '').slice(0, 16).replace(/(.{4})/g, '$1 ').trim();
+  return value
+    .replace(/\D/g, "")
+    .slice(0, 16)
+    .replace(/(.{4})/g, "$1 ")
+    .trim();
 }
 
 function formatExpiry(value: string) {
-  const digits = value.replace(/\D/g, '').slice(0, 4);
-  if (digits.length >= 3) return digits.slice(0, 2) + '/' + digits.slice(2);
+  const digits = value.replace(/\D/g, "").slice(0, 4);
+  if (digits.length >= 3) return digits.slice(0, 2) + "/" + digits.slice(2);
   return digits;
 }
 
 export default function PaymentModal({ onClose, total }: PaymentModalProps) {
   const { clearCart } = useCart();
   const [form, setForm] = useState<FormState>({
-    cardholderName: '',
-    cardNumber: '',
-    expiry: '',
-    cvv: '',
-    billingAddress: '',
+    cardholderName: "",
+    cardNumber: "",
+    expiry: "",
+    cvv: "",
+    billingAddress: "",
   });
   const [errors, setErrors] = useState<Errors>({});
-  const [status, setStatus] = useState<Status>('idle');
+  const [status, setStatus] = useState<Status>("idle");
   const overlayRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    document.body.style.overflow = 'hidden';
-    return () => { document.body.style.overflow = ''; };
+    document.body.style.overflow = "hidden";
+    return () => {
+      document.body.style.overflow = "";
+    };
   }, []);
 
   const validate = (): boolean => {
     const e: Errors = {};
-    if (!form.cardholderName.trim()) e.cardholderName = 'Name is required';
-    const rawCard = form.cardNumber.replace(/\s/g, '');
-    if (rawCard.length !== 16) e.cardNumber = 'Enter a valid 16-digit card number';
-    const [mm, yy] = form.expiry.split('/');
+    if (!form.cardholderName.trim()) e.cardholderName = "Name is required";
+    const rawCard = form.cardNumber.replace(/\s/g, "");
+    if (rawCard.length !== 16)
+      e.cardNumber = "Enter a valid 16-digit card number";
+    const [mm, yy] = form.expiry.split("/");
     const month = parseInt(mm, 10);
-    const year = parseInt('20' + yy, 10);
+    const year = parseInt("20" + yy, 10);
     const now = new Date();
-    if (!mm || !yy || month < 1 || month > 12 || year < now.getFullYear() || (year === now.getFullYear() && month < now.getMonth() + 1)) {
-      e.expiry = 'Enter a valid expiry date';
+    if (
+      !mm ||
+      !yy ||
+      month < 1 ||
+      month > 12 ||
+      year < now.getFullYear() ||
+      (year === now.getFullYear() && month < now.getMonth() + 1)
+    ) {
+      e.expiry = "Enter a valid expiry date";
     }
-    if (form.cvv.length < 3) e.cvv = 'CVV must be 3–4 digits';
-    if (!form.billingAddress.trim()) e.billingAddress = 'Billing address is required';
+    if (form.cvv.length < 3) e.cvv = "CVV must be 3–4 digits";
+    if (!form.billingAddress.trim())
+      e.billingAddress = "Billing address is required";
     setErrors(e);
     return Object.keys(e).length === 0;
   };
@@ -74,9 +89,9 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
     if (!validate()) return;
-    setStatus('loading');
+    setStatus("loading");
     setTimeout(() => {
-      setStatus('success');
+      setStatus("success");
       setTimeout(() => {
         clearCart();
         onClose();
@@ -85,12 +100,12 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
   };
 
   const handleOverlayClick = (e: React.MouseEvent) => {
-    if (e.target === overlayRef.current && status === 'idle') onClose();
+    if (e.target === overlayRef.current && status === "idle") onClose();
   };
 
   const handleChange = (field: keyof FormState, value: string) => {
-    setForm(prev => ({ ...prev, [field]: value }));
-    if (errors[field]) setErrors(prev => ({ ...prev, [field]: undefined }));
+    setForm((prev) => ({ ...prev, [field]: value }));
+    if (errors[field]) setErrors((prev) => ({ ...prev, [field]: undefined }));
   };
 
   return (
@@ -265,7 +280,15 @@ export default function PaymentModal({ onClose, total }: PaymentModalProps) {
   );
 }
 
-function Field({ label, error, children }: { label: string; error?: string; children: React.ReactNode }) {
+function Field({
+  label,
+  error,
+  children,
+}: {
+  label: string;
+  error?: string;
+  children: React.ReactNode;
+}) {
   return (
     <div className="flex flex-col gap-1">
       <label className="text-sm font-medium text-gray-700">{label}</label>
@@ -278,7 +301,7 @@ function Field({ label, error, children }: { label: string; error?: string; chil
 function inputClass(hasError: boolean) {
   return `w-full px-3 py-2.5 rounded-xl border text-sm outline-none transition-colors ${
     hasError
-      ? 'border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100'
-      : 'border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100'
+      ? "border-red-300 focus:border-red-400 focus:ring-2 focus:ring-red-100"
+      : "border-gray-200 focus:border-blue-400 focus:ring-2 focus:ring-blue-100"
   }`;
 }
