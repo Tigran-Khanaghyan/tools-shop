@@ -1,19 +1,18 @@
-import { useState } from "react";
-import { Trash2, Plus, Minus, ShoppingBag, ShoppingCart } from "lucide-react";
-import { useCart } from "../context/CartContext";
-import PaymentModal from "../components/PaymentModal";
+import { useState } from 'react'
+import { Trash2, Plus, Minus, ShoppingBag, ShoppingCart } from 'lucide-react'
+import { useCart } from '../context/CartContext'
+import PaymentModal from '../components/PaymentModal'
 
 interface BasketPageProps {
-  onShop: () => void;
+  onShop: () => void
 }
 
 export default function BasketPage({ onShop }: BasketPageProps) {
-  const { items, removeFromCart, updateQuantity, clearCart, subtotal } =
-    useCart();
-  const [showPayment, setShowPayment] = useState(false);
+  const { items, removeFromCart, updateQuantity, clearCart, subtotal } = useCart()
+  const [showPayment, setShowPayment] = useState(false)
 
-  const shipping = subtotal >= 100 ? 0 : 9.99;
-  const total = subtotal + shipping;
+  const shipping = subtotal >= 100 ? 0 : 9.99
+  const total = subtotal + shipping
 
   if (items.length === 0) {
     return (
@@ -21,12 +20,9 @@ export default function BasketPage({ onShop }: BasketPageProps) {
         <div className="w-20 h-20 bg-gray-100 rounded-3xl flex items-center justify-center mb-5">
           <ShoppingCart size={36} className="text-gray-400" />
         </div>
-        <h2 className="text-2xl font-bold text-gray-900 mb-2">
-          Your basket is empty
-        </h2>
+        <h2 className="text-2xl font-bold text-gray-900 mb-2">Your basket is empty</h2>
         <p className="text-gray-500 mb-6 max-w-xs">
-          Looks like you haven't added any tools yet. Start browsing our
-          collection.
+          Looks like you haven't added any tools yet. Start browsing our collection.
         </p>
         <button
           onClick={onShop}
@@ -35,7 +31,7 @@ export default function BasketPage({ onShop }: BasketPageProps) {
           Browse Tools
         </button>
       </div>
-    );
+    )
   }
 
   return (
@@ -45,7 +41,7 @@ export default function BasketPage({ onShop }: BasketPageProps) {
         <div>
           <h1 className="text-2xl font-bold text-gray-900">Your Basket</h1>
           <p className="text-gray-500 text-sm mt-0.5">
-            {items.length} item{items.length !== 1 ? "s" : ""}
+            {items.length} item{items.length !== 1 ? 's' : ''}
           </p>
         </div>
         <button
@@ -73,21 +69,17 @@ export default function BasketPage({ onShop }: BasketPageProps) {
                   alt={tool.name}
                   className="w-full h-full object-cover"
                   onError={(e) => {
-                    (e.target as HTMLImageElement).src =
-                      `https://placehold.co/80x80/f1f5f9/94a3b8?text=${encodeURIComponent(tool.name.charAt(0))}`;
+                    ;(e.target as HTMLImageElement).src =
+                      `https://placehold.co/80x80/f1f5f9/94a3b8?text=${encodeURIComponent(tool.name.charAt(0))}`
                   }}
                 />
               </div>
 
               {/* Info */}
               <div className="flex-1 min-w-0">
-                <p className="font-semibold text-gray-900 text-sm leading-snug">
-                  {tool.name}
-                </p>
+                <p className="font-semibold text-gray-900 text-sm leading-snug">{tool.name}</p>
                 <p className="text-xs text-gray-500 mt-0.5">{tool.category}</p>
-                <p className="text-sm font-bold text-gray-900 mt-1">
-                  ${tool.price.toFixed(2)}
-                </p>
+                <p className="text-sm font-bold text-gray-900 mt-1">${tool.price.toFixed(2)}</p>
               </div>
 
               {/* Qty controls */}
@@ -111,10 +103,7 @@ export default function BasketPage({ onShop }: BasketPageProps) {
 
               {/* Line total */}
               <div className="text-right flex-shrink-0 ml-2">
-                <p
-                  className="text-sm font-bold text-gray-900"
-                  data-qa="basket-card-price"
-                >
+                <p className="text-sm font-bold text-gray-900" data-qa="basket-card-price">
                   ${(tool.price * quantity).toFixed(2)}
                 </p>
                 <button
@@ -133,35 +122,27 @@ export default function BasketPage({ onShop }: BasketPageProps) {
         {/* Summary */}
         <div className="lg:col-span-1">
           <div className="bg-white rounded-2xl border border-gray-100 shadow-sm p-6 sticky top-24">
-            <h2 className="font-semibold text-gray-900 mb-5 text-lg">
-              Order Summary
-            </h2>
+            <h2 className="font-semibold text-gray-900 mb-5 text-lg">Order Summary</h2>
 
             <div className="flex flex-col gap-3 text-sm">
               <div className="flex justify-between text-gray-600">
                 <span>Subtotal</span>
-                <span className="font-medium text-gray-900">
-                  ${subtotal.toFixed(2)}
-                </span>
+                <span className="font-medium text-gray-900">${subtotal.toFixed(2)}</span>
               </div>
               <div className="flex justify-between text-gray-600">
                 <span>Shipping</span>
                 <span
-                  className={`font-medium ${shipping === 0 ? "text-green-600" : "text-gray-900"}`}
+                  className={`font-medium ${shipping === 0 ? 'text-green-600' : 'text-gray-900'}`}
                 >
-                  {shipping === 0 ? "Free" : `$${shipping.toFixed(2)}`}
+                  {shipping === 0 ? 'Free' : `$${shipping.toFixed(2)}`}
                 </span>
               </div>
               {shipping > 0 && (
-                <p className="text-xs text-gray-400">
-                  Free shipping on orders over $100
-                </p>
+                <p className="text-xs text-gray-400">Free shipping on orders over $100</p>
               )}
               <div className="border-t border-gray-100 pt-3 flex justify-between">
                 <span className="font-semibold text-gray-900">Total</span>
-                <span className="font-bold text-gray-900 text-lg">
-                  ${total.toFixed(2)}
-                </span>
+                <span className="font-bold text-gray-900 text-lg">${total.toFixed(2)}</span>
               </div>
             </div>
 
@@ -184,9 +165,7 @@ export default function BasketPage({ onShop }: BasketPageProps) {
         </div>
       </div>
 
-      {showPayment && (
-        <PaymentModal total={total} onClose={() => setShowPayment(false)} />
-      )}
+      {showPayment && <PaymentModal total={total} onClose={() => setShowPayment(false)} />}
     </div>
-  );
+  )
 }

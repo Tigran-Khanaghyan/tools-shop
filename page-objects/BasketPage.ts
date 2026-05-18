@@ -1,97 +1,91 @@
-import { expect, Locator, Page } from "@playwright/test";
+import { expect, Locator, Page } from '@playwright/test'
 
 export class BasketPage {
-  private basketCards: Locator;
-  private removeBasketCardButtons: Locator;
-  private basketCardPrices: Locator;
-  private proceedToPaymentButton: Locator;
+  private basketCards: Locator
+  private removeBasketCardButtons: Locator
+  private basketCardPrices: Locator
+  private proceedToPaymentButton: Locator
 
-  private cardholderNameInput: Locator;
-  private cardholderNameHiddenInput: Locator;
-  private cardNumberInput: Locator;
-  private expiryInput: Locator;
-  private cvvInput: Locator;
-  private billingAddressInput: Locator;
-  private submitPaymentButton: Locator;
-  private paymentSuccesfulText: Locator;
+  private cardholderNameInput: Locator
+  private cardholderNameHiddenInput: Locator
+  private cardNumberInput: Locator
+  private expiryInput: Locator
+  private cvvInput: Locator
+  private billingAddressInput: Locator
+  private submitPaymentButton: Locator
+  private paymentSuccesfulText: Locator
 
   constructor(private page: Page) {
-    this.basketCards = page.locator('[data-qa="basket-card"]');
-    this.removeBasketCardButtons = page.locator(
-      '[data-qa="remove-basket-card"]',
-    );
-    this.basketCardPrices = page.locator('[data-qa="basket-card-price"]');
-    this.proceedToPaymentButton = page.locator(
-      '[data-qa="proceed-to-payment"]',
-    );
+    this.basketCards = page.locator('[data-qa="basket-card"]')
+    this.removeBasketCardButtons = page.locator('[data-qa="remove-basket-card"]')
+    this.basketCardPrices = page.locator('[data-qa="basket-card-price"]')
+    this.proceedToPaymentButton = page.locator('[data-qa="proceed-to-payment"]')
 
-    this.cardholderNameInput = page.locator('[data-qa="cardholder-name"]');
-    this.cardholderNameHiddenInput = page.locator(
-      '[data-qa="cardholder-name-hidden"]',
-    );
+    this.cardholderNameInput = page.locator('[data-qa="cardholder-name"]')
+    this.cardholderNameHiddenInput = page.locator('[data-qa="cardholder-name-hidden"]')
 
-    this.cardNumberInput = page.locator('[data-qa="card-number"]');
-    this.expiryInput = page.locator('[data-qa="expiry"]');
-    this.cvvInput = page.locator('[data-qa="cvv"]');
-    this.billingAddressInput = page.locator('[data-qa="billing-address"]');
-    this.submitPaymentButton = page.locator('[data-qa="submit-payment"]');
-    this.paymentSuccesfulText = page.locator('[data-qa="payment-successful"]');
+    this.cardNumberInput = page.locator('[data-qa="card-number"]')
+    this.expiryInput = page.locator('[data-qa="expiry"]')
+    this.cvvInput = page.locator('[data-qa="cvv"]')
+    this.billingAddressInput = page.locator('[data-qa="billing-address"]')
+    this.submitPaymentButton = page.locator('[data-qa="submit-payment"]')
+    this.paymentSuccesfulText = page.locator('[data-qa="payment-successful"]')
   }
 
   removeExpensiveTool = async () => {
-    await this.basketCards.first().waitFor();
-    const itemsBeforeRemoval = await this.basketCards.count();
-    await this.basketCardPrices.first().waitFor();
-    const allPriceTexts = await this.basketCardPrices.allInnerTexts();
+    await this.basketCards.first().waitFor()
+    const itemsBeforeRemoval = await this.basketCards.count()
+    await this.basketCardPrices.first().waitFor()
+    const allPriceTexts = await this.basketCardPrices.allInnerTexts()
     const prices = allPriceTexts.map((item) => {
-      return parseFloat(item.replace("$", ""));
-    });
-    const maxNumber = Math.max(...prices);
-    const maxNumberIndex = prices.indexOf(maxNumber);
-    await this.removeBasketCardButtons.nth(maxNumberIndex).waitFor();
-    await this.removeBasketCardButtons.nth(maxNumberIndex).click();
-    const itemsAfterRemoval = await this.basketCards.count();
-    expect(itemsAfterRemoval).toBe(itemsBeforeRemoval - 1);
-  };
+      return parseFloat(item.replace('$', ''))
+    })
+    const maxNumber = Math.max(...prices)
+    const maxNumberIndex = prices.indexOf(maxNumber)
+    await this.removeBasketCardButtons.nth(maxNumberIndex).waitFor()
+    await this.removeBasketCardButtons.nth(maxNumberIndex).click()
+    const itemsAfterRemoval = await this.basketCards.count()
+    expect(itemsAfterRemoval).toBe(itemsBeforeRemoval - 1)
+  }
 
   proceedToPayment = async () => {
-    await this.proceedToPaymentButton.waitFor();
-    await this.proceedToPaymentButton.click();
-  };
+    await this.proceedToPaymentButton.waitFor()
+    await this.proceedToPaymentButton.click()
+  }
 
   secureCheckout = async () => {
-    await this.cardholderNameInput.waitFor();
-    await this.cardholderNameHiddenInput.waitFor();
-    const cardHolderName = await this.cardholderNameHiddenInput.inputValue();
+    await this.cardholderNameInput.waitFor()
+    await this.cardholderNameHiddenInput.waitFor()
+    const cardHolderName = await this.cardholderNameHiddenInput.inputValue()
 
     //option 1
-    await this.cardholderNameInput.fill(cardHolderName);
-    await expect(this.cardholderNameInput).toHaveValue(cardHolderName);
+    await this.cardholderNameInput.fill(cardHolderName)
+    await expect(this.cardholderNameInput).toHaveValue(cardHolderName)
 
     //option 2
     // await this.cardholderNameInput.focus();
     // await this.page.keyboard.type(cardHolderName, { delay: 1000 });
     // expect(await this.cardholderNameInput.inputValue()).toBe(cardHolderName);
 
-    await this.cardNumberInput.waitFor();
-    await this.cardNumberInput.fill("1234567890123456");
+    await this.cardNumberInput.waitFor()
+    await this.cardNumberInput.fill('1234567890123456')
 
-    await this.expiryInput.waitFor();
-    await this.expiryInput.fill("0829");
+    await this.expiryInput.waitFor()
+    await this.expiryInput.fill('0829')
 
-    await this.cvvInput.waitFor();
-    await this.cvvInput.fill("555");
+    await this.cvvInput.waitFor()
+    await this.cvvInput.fill('555')
 
-    await this.billingAddressInput.waitFor();
-    await this.billingAddressInput.fill("Armenia");
+    await this.billingAddressInput.waitFor()
+    await this.billingAddressInput.fill('Armenia')
 
-    await this.submitPaymentButton.waitFor();
-    await this.submitPaymentButton.click();
-  };
+    await this.submitPaymentButton.waitFor()
+    await this.submitPaymentButton.click()
+  }
 
   checkPaymentStatus = async () => {
-    await this.paymentSuccesfulText.waitFor();
-    const successfulText = await this.paymentSuccesfulText.textContent();
-    expect(successfulText).toEqual("Payment Successful!");
-  };
+    await this.paymentSuccesfulText.waitFor()
+    const successfulText = await this.paymentSuccesfulText.textContent()
+    expect(successfulText).toEqual('Payment Successful!')
+  }
 }
