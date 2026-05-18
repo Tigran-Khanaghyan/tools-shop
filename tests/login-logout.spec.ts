@@ -2,7 +2,7 @@ import test from '@playwright/test'
 import { LoginPage } from '../page-objects/LoginPage'
 import { ToolsPage } from '../page-objects/ToolsPage'
 
-test.describe.only('Login Logout flow', () => {
+test.describe.parallel('Login Logout flow', () => {
   test.beforeEach(async ({ page }) => {
     const loginPage = new LoginPage(page)
     await loginPage.visit()
@@ -19,5 +19,8 @@ test.describe.only('Login Logout flow', () => {
     await loginPage.loginIntoToolshop()
     await toolsPage.toolsShopTitle.waitFor()
     await toolsPage.toolsShopTitle.isVisible()
+    await toolsPage.logoutButton.waitFor()
+    await toolsPage.logoutButton.isVisible()
+    await toolsPage.logoutButton.click()
   })
 })

@@ -11,12 +11,14 @@ export class ToolsPage {
   private powerToolsFilterButton: Locator
   private toolTitles: Locator
   public toolsShopTitle: Locator
+  public logoutButton: Locator
 
   constructor(private page: Page) {
     this.addButtons = page.locator('[data-qa="product-button"]')
     this.powerToolsFilterButton = page.locator('[data-qa="power_tools"]')
     this.toolTitles = page.locator('[data-qa="tool-title"]')
     this.toolsShopTitle = page.locator('[data-qa="tools-shop-title"]')
+    this.logoutButton = page.locator('[data-qa="logout-button"]')
   }
 
   visit = async () => {

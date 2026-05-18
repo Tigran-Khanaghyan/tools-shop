@@ -82,6 +82,7 @@ export default function Header() {
             ))}
             <div className="w-px h-6 bg-gray-200 mx-1" />
             <button
+              data-qa="logout-button"
               onClick={logout}
               className="flex items-center gap-1.5 px-3 py-2 rounded-lg text-sm font-medium text-gray-500 hover:bg-red-50 hover:text-red-600 transition-all duration-150"
               title="Logout"
