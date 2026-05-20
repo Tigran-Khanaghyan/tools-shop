@@ -1,12 +1,14 @@
 import { Locator, Page } from '@playwright/test'
+import { AbstractPage } from './AbstractPage'
 
-export class LoginPage {
+export class LoginPage extends AbstractPage {
   private submitLoginButton: Locator
   private emailInput: Locator
   private passwordInput: Locator
   public loginErrorElement: Locator
 
-  constructor(private page: Page) {
+  constructor(readonly page: Page) {
+    super(page)
     this.submitLoginButton = page.locator('[data-qa="submit-login"]')
     this.emailInput = page.locator('[data-qa="login-email"]')
     this.passwordInput = page.locator('[data-qa="login-password"]')
