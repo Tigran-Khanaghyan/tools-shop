@@ -9,6 +9,7 @@
     "lint": "eslint .",
     "preview": "vite preview",
     "test": "playwright test --headed",
+    "test:api": "playwright test --config=api.config.ts",
     "ui": "playwright test --ui",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "format": "prettier --write .",
