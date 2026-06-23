@@ -10,6 +10,8 @@
     "preview": "vite preview",
     "test": "playwright test --headed",
     "test:api": "playwright test --config=api.config.ts",
+    "test:tips": "playwright test --config=tips.config.ts --headed",
+    "test:tips:3time": "playwright test --config=tips.config.ts --retries=3",
     "ui": "playwright test --ui",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "format": "prettier --write .",
