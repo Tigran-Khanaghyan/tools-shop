@@ -71,3 +71,6 @@ export default defineConfig([
   },
 ])
 ```
+
+Install jenkins
+1.java -jar jenkins.war httpPort=8080 --enable-future-java 2. 1be2c0c2bd7c49358cdcd32b18d49e59
