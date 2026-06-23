@@ -13,7 +13,8 @@
     "ui": "playwright test --ui",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "jenkins-server": "java -jar jenkins.war httpPort=8080 --enable-future-java"
   },
   "dependencies": {
     "@prisma/client": "^7.8.0",
