@@ -32,7 +32,7 @@ test.describe.only('Tips and Tricks', () => {
     await page.mouse.move(0, 100)
   })
 
-  test('Test multiple browser tabs inside 1 browser', async ({ browser }) => {
+  test.only('Test multiple browser tabs inside 1 browser', async ({ browser }) => {
     const context = await browser.newContext()
     const page1 = await context.newPage()
     const page2 = await context.newPage()
@@ -41,4 +41,5 @@ test.describe.only('Tips and Tricks', () => {
     await page2.goto('/')
     await page3.goto('/')
   })
+  
 })

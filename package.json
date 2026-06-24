@@ -12,6 +12,7 @@
     "test:api": "playwright test --config=api.config.ts",
     "test:tips": "playwright test --config=tips.config.ts --headed",
     "test:tips:3time": "playwright test --config=tips.config.ts --retries=3",
+    "test:reporter": "npx playwright test --reporter=reporter.ts",
     "ui": "playwright test --ui",
     "typecheck": "tsc --noEmit -p tsconfig.app.json",
     "format": "prettier --write .",
